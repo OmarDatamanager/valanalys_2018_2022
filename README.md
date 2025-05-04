@@ -46,28 +46,6 @@ Beräkningen av totala röster per kommun per år fungerar nu stabilt utan exter
 
 ---
 
-###  3. **Felhantering för Socialdemokraterna – Saknad data**
-####  Problem
-I vissa kommuner saknades röstdata för Socialdemokraterna, vilket kunde leda till att sidan inte renderades korrekt eller att diagrammen blev tomma.
-
-####  Lösning
-Implementera ett säkerhetsblock som visar ett meddelande om datan saknas:
-```js
-if (selectedParty === 'Socialdemokraterna') {
-  const validData = filteredVotes.filter(r => r.percent > 0 && !isNaN(r.percent));
-  if (validData.length === 0) {
-    addMdToPage(`Saknar data för Socialdemokraterna...`);
-    return;
-  }
-  filteredVotes = validData;
-}
-```
-
-####  Resultat
-Gränssnittet förblir stabilt även om data saknas. Användaren informeras om problemet och uppmanas att välja ett annat alternativ.
-
----
-
 ###  4. **Felaktig sammanslagning av inkomst- och röstdata**
 ####  Problem
 Vid sammanfogning av inkomst- och röstdata kunde vissa kommuner orsaka `undefined`-fel om informationen saknades i någon av datakällorna.
